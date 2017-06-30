@@ -81,13 +81,14 @@ public class Graphics
     {
         consoleText.append(msg);
         consoleText.append("\n");
+        consoleText.append("\n");
         console.setText(consoleText.toString());
         console.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
 
                 console.setText(consoleText.toString());
-                //System.out.println(consoleText.toString());
+                System.out.println(consoleText.toString());
             }
         });
     }
@@ -198,7 +199,7 @@ public class Graphics
             }
             catch (NumberFormatException ex)
             {   }
-            System.out.println("textfield changed from " + oldValue + " to " + newValue);
+            //System.out.println("textfield changed from " + oldValue + " to " + newValue);
         });
         durationContainer.getChildren().addAll(durationText, durationTransition);
     }

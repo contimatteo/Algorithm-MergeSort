@@ -21,21 +21,22 @@ public class Main extends Application {
     public static void main(String[] args) {    launch(args);   }
     // *****************************************************************************************************************
 
-    public  static            int         SPACING                     = 35;
-    public  static            int         ARRAY_CELL_DIMENSION        = 30;
-    public  static  final     int         SORT_GROUP_MOVE_DELTA       = 70;
-    public  static  final     int         SORT_GROUP_MARGIN_DELTA     = 35;
-    public  static            Duration    SPEED                       = Duration.millis(200);
-    public  static            int         ARRAY_LENGHT                = 40;
-    public  static            int         ARRAY_MAX_VALUE             = 400;
+    public  static            int           SPACING                     = 35;
+    public  static            int           ARRAY_CELL_DIMENSION        = 30;
+    public  static  final     int           SORT_GROUP_MOVE_DELTA       = 70;
+    public  static  final     int           SORT_GROUP_MARGIN_DELTA     = 35;
+    public  static            Duration      SPEED                       = Duration.millis(200);
+    public  static            int           ARRAY_LENGHT                = 40;
+    public  static            int           ARRAY_MAX_VALUE             = 400;
 
-    public  static            int         windowWidth                 = 0;
-    public  static            int         windowHeight                = 0;
-    public  static            int         windowX                     = 0;
-    public  static            int         windowY                     = 0;
+    public  static            int           windowWidth                 = 0;
+    public  static            int           windowHeight                = 0;
+    public  static            int           windowX                     = 0;
+    public  static            int           windowY                     = 0;
 
-    public  static            int[]       arrayInput                 = {};
-
+    public  static            int[]         arrayInput                  = {};
+    public  static            boolean       stopExecution               = false;
+    public  static            String        fileName                    = "default";
 
     // *****************************************************************************************************************
     //public Input input;
@@ -62,15 +63,16 @@ public class Main extends Application {
                 try
                 {
                     File dir = new File(".");
-                    File file = new File(dir.getCanonicalPath() + File.separator + "input.txt");
-                    //System.out.println(dir.getCanonicalPath() + File.separator + "input.txt");
+                    File file = new File(dir.getCanonicalPath() + File.separator + Main.fileName + ".txt");
                     Input.createInput(file);
                 }
                 catch (FileNotFoundException ex)
                 {
+                    Main.sceltaInputOptions(1);
                     System.out.println("Eccezzione generata nel trovare il file --> " + ex.getMessage());
                 }
                 catch (IOException ex) {
+                    Main.sceltaInputOptions(1);
                     System.out.println("Eccezzione generata --> " + ex.getMessage());
                 }
                 break;
@@ -91,15 +93,17 @@ public class Main extends Application {
                 return;
             }
         });
-        if(arrayInput.length>0) {
-            try {
-                // GRAFICA
-                graphics = new Graphics();
-                graphics.createGraphics(arrayInput, primaryStage);
-                // ALGORITMO
-                MergeSort algorithm = new MergeSort(graphics);
-            } catch (RuntimeException ex) {
-                System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage());
+        if(stopExecution=true) {
+            if (arrayInput.length > 0) {
+                try {
+                    // GRAFICA
+                    graphics = new Graphics();
+                    graphics.createGraphics(arrayInput, primaryStage);
+                    // ALGORITMO
+                    MergeSort algorithm = new MergeSort(graphics);
+                } catch (RuntimeException ex) {
+                    System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage());
+                }
             }
         }
     }

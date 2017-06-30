@@ -76,6 +76,8 @@ public class Input
                 cont++;
             }
             br.close();
+            if(cont>40)
+                cont=40;
             Main.arrayInput= new int[cont];
             line = "";
             while (i<cont)
@@ -89,9 +91,7 @@ public class Input
                 }
                 catch (NumberFormatException ex)
                 {
-                    line = buffer.readLine();
-                    if(line!="Fine")
-                        System.out.println("Eccezione generata dalla conversione dei valori nel file di testo --> " + ex.getLocalizedMessage());
+                    System.out.println("Eccezione generata dalla conversione dei valori nel file di testo --> " + ex.getLocalizedMessage());
                 }
             }
             buffer.close();
@@ -99,7 +99,8 @@ public class Input
         catch (FileNotFoundException ex)
         {
             System.out.println("Eccezione generata --> " + ex.getMessage());
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             System.out.println("Eccezione generata --> " + ex.getMessage());
         }
     }
