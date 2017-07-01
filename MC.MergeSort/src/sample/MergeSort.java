@@ -38,6 +38,7 @@ public class MergeSort
             startR = step;
             while(startR + step < array.length)
             {
+                graphics.consoleWrite("startL"+startL);
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (startR + step), sq);
                 //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step);
                 //System.out.println(" ");
@@ -49,6 +50,7 @@ public class MergeSort
             //if(startR < array.length && (startR + step) < array.length)
             if(startR < array.length)
             {
+                graphics.consoleWrite("startR"+startR);
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (array.length), sq);
                 //System.out.printf("* startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, array.length);
                 //System.out.println(" ");

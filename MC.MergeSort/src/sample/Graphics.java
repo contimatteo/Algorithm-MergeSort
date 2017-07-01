@@ -69,7 +69,7 @@ public class Graphics
         consoleText.append("CONSOLE");
         consoleText.append("\n"); consoleText.append("\n");
         console = new Label(" ");
-        console.setTextFill(Color.AZURE);
+        console.setTextFill(Color.valueOf("rgb(122, 249, 79)"));
         console.setAlignment(Pos.TOP_LEFT);
         console.setText(consoleText.toString());
         console.setTextAlignment(TextAlignment.LEFT);
@@ -82,13 +82,13 @@ public class Graphics
         consoleText.append(msg);
         consoleText.append("\n");
         consoleText.append("\n");
-        console.setText(consoleText.toString());
+        console.setText(">> " + consoleText.toString());
         console.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
 
                 console.setText(consoleText.toString());
-                System.out.println(consoleText.toString());
+                //System.out.println(consoleText.toString());
             }
         });
     }
