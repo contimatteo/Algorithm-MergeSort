@@ -113,7 +113,7 @@ public class Options
         inputTitle.setAlignment(Pos.CENTER);
         // input array's size
         inputArraySize = new TextField ();
-        inputArraySize.setText("40");
+        inputArraySize.setText("20");
         inputArraySize.setMaxWidth(150);
         container1.getChildren().addAll(inputTitle, inputSubTitle, inputArraySize);
         //inputArraySize.clear();
@@ -171,13 +171,14 @@ public class Options
                 }
                 catch (NumberFormatException ex)
                 {   }
-                if((method>0)&&(method<3)&&(size>0)&&(size<=40))
+                if((method>0)&&(method<4)&&(size>0)&&(size<=40))
                 {
                     Main.fileName=file;
                     Main.ARRAY_LENGHT=size;
                     Main.ARRAY_MAX_VALUE = size * 5;
-                    File file = new File(Main.fileName + ".txt");
-                    if(method==2) {
+                    if(method==2)
+                    {
+                        File file = new File(Main.fileName + ".txt");
                         try {
                             File dir = new File(".");
                             file = new File(dir.getCanonicalPath() + File.separator + Main.fileName + ".txt");
@@ -198,6 +199,14 @@ public class Options
                             }
                         }
                     }
+                    if((method==3))
+                    {
+                        Alert alert = new Alert(AlertType.WARNING);
+                        alert.setTitle("Attenzione");
+                        alert.setContentText("Opzione non ancora implementata, passo alla 1");
+                        alert.showAndWait();
+                        method=1;
+                    }
 
                     Main.sceltaInputOptions(method);
                     myStage.close();
@@ -205,7 +214,11 @@ public class Options
                     return;
                 }
                 {
-                    System.out.println("input non validi");
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Attenzione");
+                    alert.setHeaderText("Input non validi");
+                    alert.setContentText("Leggere attentamente le istruzioni e assicurarsi di rispettare i limiti di input");
+                    alert.showAndWait();
                     btn.setDisable(false);
                     return;
                 }
@@ -222,7 +235,9 @@ public class Options
                     fileInputName.setDisable(true);
                 if(option==2)
                     fileInputName.setDisable(false);
-                if((option<1)||(option>2))
+                if(option==3)
+                    fileInputName.setDisable(true);
+                if((option<1)||(option>3))
                     btn.setDisable(true);
 
             }

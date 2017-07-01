@@ -80,6 +80,10 @@ public class Main extends Application {
                 }
                 break;
 
+            case 3:
+                stopExecution=true;
+                break;
+
             default:
                 //sceltaInputOptions();
                 break;
@@ -116,6 +120,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        stopExecution=false;
         firstStage=primaryStage;
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();

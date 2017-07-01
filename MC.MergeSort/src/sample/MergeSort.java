@@ -43,7 +43,7 @@ public class MergeSort
             {
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (startR + step), sq);
                 //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step); System.out.println(" ");
-                graphics.consoleWriteOutput("\t startL="+startL+", stopL="+(startL+step)+", startR="+startR+", stopR="+(startR + step));
+                graphics.consoleWriteOutput("\t start Left Array="+startL+", stop Left Array="+(startL+step)+", startRightArray="+startR+", stop Right Array="+(startR + step));
                 startL = startR + step;
                 startR = startL + step;
             }
@@ -60,7 +60,7 @@ public class MergeSort
             step *= 2;
         }
         graphics.consoleWriteOutput(" ARRAY ORDINATO CORRETTAMENTE");
-        graphics.consoleWriteException(" PROGRAMMA TERMINATO CORRETTAMENTE");
+        graphics.consoleWriteException(" Nessuna eccezione generata durante l'ordinamento dell'array");
     }
 
     // MOTION
