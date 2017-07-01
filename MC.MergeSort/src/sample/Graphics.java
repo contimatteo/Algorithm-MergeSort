@@ -48,10 +48,10 @@ public class Graphics
     public  Button                   buttonExit;
     public  BorderPane               container;
     public  ArrayList<StackPane>     arrayCells;
-    public  HBox                     arrayContainer;
+    public  VBox                     arrayContainer;
     public  HBox                     consoleContainer;
-    public  VBox                     consoleApplication;
-    public  HBox                     consoleException;
+    public  VBox                     consoleApplicationBox;
+    public  VBox                     consoleExceptionBox;
     public  HBox                     buttonContainer;
     public  Scene                    scene;
     public  Stage                    stage;
@@ -59,48 +59,71 @@ public class Graphics
     public  HBox                     durationContainer;
     public  TextField                durationTransition;
 
-    public  Label                    console;
+    public  Label                    consoleOutputLabel;
+    public  Label                    consoleExceptionLabel;
     public ScrollPane                consoleApplicationScroll;
+    public ScrollPane                consoleExceptionScroll;
     // *****************************************************************************************************************
     public  static  StringBuilder consoleText;
-    public void createConsole()
+    public void createConsoleOutput()
     {
         consoleText=new StringBuilder();
-        consoleText.append("CONSOLE");
+        consoleText.append("CONSOLE FOR OUTPUT & DEBUG");
         consoleText.append("\n"); consoleText.append("\n");
-        console = new Label(" ");
-        console.setTextFill(Color.valueOf("rgb(122, 249, 79)"));
-        console.setAlignment(Pos.TOP_LEFT);
-        console.setText(consoleText.toString());
-        console.setTextAlignment(TextAlignment.LEFT);
-        console.setMinWidth((Main.windowWidth / 2) - 15);
-        console.setWrapText(true);
+        consoleOutputLabel = new Label(" ");
+        consoleOutputLabel.setTextFill(Color.valueOf("rgb(146, 254, 147)"));
+        consoleOutputLabel.setAlignment(Pos.TOP_LEFT);
+        consoleOutputLabel.setText(consoleText.toString());
+        consoleOutputLabel.setTextAlignment(TextAlignment.LEFT);
+        consoleOutputLabel.setMinWidth((Main.windowWidth / 2) - 15);
+        consoleOutputLabel.setWrapText(true);
     }
 
-    public void consoleWrite(String msg)
+    public void consoleWriteOutput(String msg)
     {
-        consoleText.append(msg);
+        consoleText.append(">> " + msg);
         consoleText.append("\n");
         consoleText.append("\n");
-        console.setText(">> " + consoleText.toString());
-        console.textProperty().addListener(new ChangeListener<String>() {
+        consoleOutputLabel.setText(consoleText.toString());
+        consoleOutputLabel.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov, String t, String t1) {
 
-                console.setText(consoleText.toString());
+                consoleOutputLabel.setText(consoleText.toString());
                 //System.out.println(consoleText.toString());
             }
         });
     }
 
-    public void consoleWriteDelay(String msg) {
-        Timer timer = new Timer(2000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("hello");
+    public  static  StringBuilder exceptionText;
+    public void createConsoleException()
+    {
+        exceptionText=new StringBuilder();
+        exceptionText.append("CONSOLE FOR EXCEPTIONS");
+        exceptionText.append("\n"); exceptionText.append("\n");
+        consoleExceptionLabel = new Label(" ");
+        consoleExceptionLabel.setTextFill(Color.valueOf("rgb(211, 111, 95)"));
+        consoleExceptionLabel.setAlignment(Pos.TOP_LEFT);
+        consoleExceptionLabel.setText(exceptionText.toString());
+        consoleExceptionLabel.setTextAlignment(TextAlignment.LEFT);
+        consoleExceptionLabel.setMinWidth((Main.windowWidth / 2) - 15);
+        consoleExceptionLabel.setWrapText(true);
+    }
+
+    public void consoleWriteException(String msg)
+    {
+        exceptionText.append(">> " + msg);
+        exceptionText.append("\n");
+        exceptionText.append("\n");
+        consoleExceptionLabel.setText(exceptionText.toString());
+        consoleExceptionLabel.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String t, String t1) {
+
+                consoleExceptionLabel.setText(exceptionText.toString());
+                //System.out.println(consoleText.toString());
             }
         });
-
-        timer.start();
     }
 
     //******************************************************************************************************************
@@ -172,7 +195,6 @@ public class Graphics
         {
             SequentialTransition    transition = new SequentialTransition();
             transition = mergeSortAllElements(array, arrayCells, transition);
-            buttonMotion.setDisable(true);
             transition.play();
             transition.setOnFinished(event1 -> buttonStepByStep.setDisable(false));
             buttonMotion.setDisable(false);
@@ -224,45 +246,54 @@ public class Graphics
     public void setArrayContainer()
     {
         // top
-        arrayContainer = new HBox();
+        arrayContainer = new VBox();
+        Label arrayLabel = new Label(" ARRAY GENERATO ");
+        arrayLabel.setTextFill(Color.AZURE);
+        arrayLabel.setPrefHeight(25);
         arrayContainer.setPadding(new Insets(15, 15, 15, 15));
         arrayContainer.setSpacing(10);
-        arrayContainer.setPrefHeight((Main.SPACING * 4));
+        arrayContainer.setPrefHeight((Main.SPACING * 7));
         arrayContainer.setStyle("-fx-background-color: rgb(43, 43, 43);");
-        arrayContainer.getChildren().addAll(containerStackPane);
+        arrayContainer.getChildren().addAll(arrayLabel, containerStackPane);
     }
 
     public void setConsoleContainer()
     {
         setConsoleApplication();
-        inputApplication();
+        setConsoleException();
         consoleContainer = new HBox();
         consoleContainer.setPadding(new Insets(15, 15, 15, 15));
         consoleContainer.setSpacing(15);
         consoleContainer.setStyle("-fx-background-color: rgb(60, 63, 65);");
-        consoleContainer.getChildren().addAll(consoleApplicationScroll, consoleException);
+        consoleContainer.getChildren().addAll(consoleApplicationScroll, consoleExceptionScroll);
     }
 
     public void setConsoleApplication()
     {
-        consoleApplication = new VBox();
-        consoleApplication.setPrefWidth((Main.windowWidth/2)-15);
-        consoleApplication.setMinHeight((Main.windowHeight-(arrayContainer.getHeight()+buttonContainer.getHeight()+250)));
-        consoleApplication.setStyle("-fx-background-color:rgb(43, 43, 43); -fx-padding:20px;");
-        consoleApplication.setAlignment(Pos.TOP_LEFT);
-        consoleApplication.getChildren().add(console);
+        consoleApplicationBox = new VBox();
+        consoleApplicationBox.setPrefWidth((Main.windowWidth/2)-15);
+        consoleApplicationBox.setMinHeight((Main.windowHeight-(arrayContainer.getHeight()+buttonContainer.getHeight()+250)));
+        consoleApplicationBox.setStyle("-fx-background-color:rgb(43, 43, 43); -fx-padding:20px;");
+        consoleApplicationBox.setAlignment(Pos.TOP_LEFT);
+        consoleApplicationBox.getChildren().add(consoleOutputLabel);
         // scroll
         consoleApplicationScroll = new ScrollPane();
-        consoleApplicationScroll.setContent(consoleApplication);
+        consoleApplicationScroll.setContent(consoleApplicationBox);
         consoleApplicationScroll.setFitToWidth(true);
     }
 
-    public void inputApplication()
+    public void setConsoleException()
     {
-        consoleException = new HBox();
-        consoleException.setPrefWidth((Main.windowWidth/2)-15);
-        consoleException.setStyle("-fx-background-color:rgb(43, 43, 43);");
-        consoleException.setAlignment(Pos.CENTER_RIGHT);
+        consoleExceptionBox = new VBox();
+        consoleExceptionBox.setPrefWidth((Main.windowWidth/2)-15);
+        consoleExceptionBox.setMinHeight((Main.windowHeight-(arrayContainer.getHeight()+buttonContainer.getHeight()+250)));
+        consoleExceptionBox.setStyle("-fx-background-color:rgb(43, 43, 43); -fx-padding:20px;");
+        consoleExceptionBox.setAlignment(Pos.TOP_RIGHT);
+        consoleExceptionBox.getChildren().add(consoleExceptionLabel);
+        // scroll
+        consoleExceptionScroll = new ScrollPane();
+        consoleExceptionScroll.setContent(consoleExceptionBox);
+        consoleExceptionScroll.setFitToWidth(true);
     }
 
     public void setButtonContainer()
@@ -301,7 +332,8 @@ public class Graphics
 
     public Stage createGraphics(int[] array, Stage s)
     {
-        createConsole();
+        createConsoleOutput();
+        createConsoleException();
         mergeTemp=new MergeSort(this);
         setContainerStackPane(array);
         setButtonStepByStep(array);

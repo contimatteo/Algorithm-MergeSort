@@ -23,7 +23,7 @@ public class Main extends Application {
 
     public  static            int           SPACING                     = 35;
     public  static            int           ARRAY_CELL_DIMENSION        = 30;
-    public  static  final     int           SORT_GROUP_MOVE_DELTA       = 70;
+    public  static  final     int           SORT_GROUP_MOVE_DELTA       = 105;
     public  static  final     int           SORT_GROUP_MARGIN_DELTA     = 35;
     public  static            Duration      SPEED                       = Duration.millis(200);
     public  static            int           ARRAY_LENGHT                = 40;
