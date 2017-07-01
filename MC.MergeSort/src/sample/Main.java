@@ -1,5 +1,9 @@
 package sample;
 
+/**
+ * Created by @author Conti Matteo on ${DATE}.
+ */
+
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -100,6 +104,7 @@ public class Main extends Application {
                     graphics.createGraphics(arrayInput, primaryStage);
                     // ALGORITMO
                     MergeSort algorithm = new MergeSort(graphics);
+                    graphics.consoleWriteException(">> eccezzione");
                 } catch (RuntimeException ex) {
                     System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage());
                 }

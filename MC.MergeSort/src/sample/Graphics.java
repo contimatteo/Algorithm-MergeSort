@@ -63,6 +63,7 @@ public class Graphics
     public  Label                    consoleExceptionLabel;
     public ScrollPane                consoleApplicationScroll;
     public ScrollPane                consoleExceptionScroll;
+    public Graphics                  graphics;
     // *****************************************************************************************************************
     public  static  StringBuilder consoleText;
     public void createConsoleOutput()
@@ -132,6 +133,9 @@ public class Graphics
     // BUTTON STEP
     public SequentialTransition mergeSortOneStep(int array[], ArrayList<StackPane> list, SequentialTransition seqTrans)
     {
+        if(step==1)
+            consoleWriteOutput("Modalità : STEP BY STEP");
+
         mergeTemp.mergeSortStep(array, seqTrans, list, step);
         step *= 2;
 
@@ -141,9 +145,12 @@ public class Graphics
     // BUTTON MOTION
     public SequentialTransition mergeSortAllElements(int array[], ArrayList<StackPane> list, SequentialTransition seqTrans)
     {
+        consoleWriteOutput("Modalità : MOTION");
         mergeTemp.mergeSortMotion(array, seqTrans, list);
         return seqTrans;
     }
+
+    //******************************************************************************************************************
 
     private StackPane createValueSingleNode(int position, int number)
     {
@@ -348,6 +355,5 @@ public class Graphics
         setStage(s);
         return stage;
     }
-
 
 }

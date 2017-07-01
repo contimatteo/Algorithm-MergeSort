@@ -41,24 +41,21 @@ public class MergeSort
             startR = step;
             while(startR + step < array.length)
             {
-                graphics.consoleWriteOutput("startL"+startL);
-                graphics.consoleWriteException(">> eccezzione");
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (startR + step), sq);
-                //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step);
-                //System.out.println(" ");
+                //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step); System.out.println(" ");
+                graphics.consoleWriteOutput("\t startL="+startL+", stopL="+(startL+step)+", startR="+startR+", stopR="+(startR + step));
                 startL = startR + step;
                 startR = startL + step;
             }
-            //System.out.printf("- - - with step = %d", step);
-            //System.out.println(" ");
+            //System.out.printf("- - - with step = %d", step); System.out.println(" ");
+            graphics.consoleWriteOutput("- - - with step = " + step);
+
             //if(startR < array.length && (startR + step) < array.length)
             if(startR < array.length)
             {
-                graphics.consoleWriteOutput("startR"+startR);
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (array.length), sq);
-                //System.out.printf("* startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, array.length);
-                //System.out.println(" ");
-                //System.out.println(" ");
+                //System.out.printf("* startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, array.length); System.out.println(" "); System.out.println(" ");
+                graphics.consoleWriteOutput("startL="+startL+", stopL="+(startL+step)+", startR="+startR+", stopR="+(startR + step));
             }
             step *= 2;
         }
@@ -150,20 +147,19 @@ public class MergeSort
             while(startR + step < array.length)
             {
                 mergeSortArraysAlreadySortedStep(array, list, startL, (startL + step), startR, (startR + step), sq);
-                //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step);
-                //System.out.println(" ");
+                //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step); System.out.println(" ");
+                graphics.consoleWriteOutput("startL="+startL+", stopL="+(startL+step)+", startR="+startR+", stopR="+(startR + step));
                 startL = startR + step;
                 startR = startL + step;
             }
-            //System.out.printf("- - - with step = %d", step);
-            //System.out.println(" ");
+            //System.out.printf("- - - with step = %d", step); System.out.println(" ");
+            graphics.consoleWriteOutput("- - - with step = " + step);
             //if(startR < array.length && (startR + step) < array.length)
             if(startR < array.length)
             {
                 mergeSortArraysAlreadySortedStep(array, list, startL, (startL + step), startR, (array.length), sq);
-                //System.out.printf("* startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, array.length);
-                //System.out.println(" ");
-                //System.out.println(" ");
+                //System.out.printf("* startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, array.length); System.out.println(" "); System.out.println(" ");
+                graphics.consoleWriteOutput("startL="+startL+", stopL="+(startL+step)+", startR="+startR+", stopR="+(startR + step));
             }
         }
         else
