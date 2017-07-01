@@ -6,6 +6,7 @@ Il programma non necessita di una connessione a internet, ma richiede la presenz
 
 ###  Prerequisiti
 Sia per lo sviluppo che per il testing occorre:
+
 	Aver installato java sulla propria macchina locale
 ####  Installazione
 Per l'installazione è sufficiente:
