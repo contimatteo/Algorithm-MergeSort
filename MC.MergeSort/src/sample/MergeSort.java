@@ -5,7 +5,9 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 
