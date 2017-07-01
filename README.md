@@ -10,8 +10,7 @@ Sia per lo sviluppo che per il testing occorre:
 	Aver installato java sulla propria macchina locale
 ####  Installazione
 Per l'installazione è sufficiente:
+
 	Scaricare il contenuto della repository
 La cartella JavaDoc non è indispensabile, serve solo come guida all'interno del codice.
-
-
 
