@@ -19,10 +19,11 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 
 /**
@@ -186,9 +187,15 @@ public class Options
                         }
                         finally
                         {
-                            if(file.getTotalSpace()==0)
+                            Alert alert = new Alert(AlertType.WARNING);
+                            alert.setTitle("Attenzione");
+                            alert.setHeaderText("Il file scelto non è stato trovato");
+                            alert.setContentText("L'algoritmo procederà automaticamente generando un vettore causale");
+                            if(file.getTotalSpace()==0) {
                                 // method equals to 2 but file input.txt not found
                                 method = 1;
+                                alert.showAndWait();
+                            }
                         }
                     }
 
