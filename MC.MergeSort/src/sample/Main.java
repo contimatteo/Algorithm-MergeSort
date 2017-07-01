@@ -54,7 +54,6 @@ public class Main extends Application {
     {
         switch(scelta)
         {
-
             case 1:
                 Input.createInput(ARRAY_LENGHT, ARRAY_MAX_VALUE);
                 break;
