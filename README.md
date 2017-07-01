@@ -15,4 +15,3 @@ Per l'installazione è sufficiente:
 La cartella JavaDoc non è indispensabile, serve solo come guida all'interno del codice.
 
 
-
