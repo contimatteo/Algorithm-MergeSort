@@ -1,18 +1,18 @@
 # **PROGETTO ALGORITMI**
+Il merge sort è un algoritmo di ordinamento basato su confronti che utilizza un processo di risoluzione di tipo ricorsivo, sfruttando la tecnica del Divide et Impera, che consiste nella suddivisione del problema in sotto-problemi della stessa natura di dimensione via via più piccola. Fu inventato da John von Neumann nel 1945.
 
-## *Merge-Sort*
-In computer science, merge sort (also commonly spelled Merge-Sort) is an efficient, general-purpose, comparison-based sorting algorithm. Most implementations produce a stable sort, which means that the implementation preserves the input order of equal elements in the sorted output. Merge-Sort is a divide and conquer algorithm that was invented by John von Neumann in 1945.[1] A detailed description and analysis of bottom-up Merge-Sort appeared in a report by Goldstine and Neumann as early as 1948.
+## Prima di Iniziare
+Il programma non necessita di una connessione a internet, ma richiede la presenza di un'interfaccia grafica attraverso la quale poter interagire con l'utente.
+
+###  Prerequisiti
+Sia per lo sviluppo che per il testing occorre:
+
+	Aver installato java sulla propria macchina locale
+####  Installazione
+Per l'installazione è sufficiente:
+
+	Scaricare il contenuto della repository
+La cartella JavaDoc non è indispensabile, serve solo come guida all'interno del codice.
 
 
-## *Grafica*
-- Main Stage --> Show Algorithm's work
-- Interactive Stage --> controls and interactive controls for user interactions
-- Virtual Console Stage --> Deployment Task Report (ex: Exceptions, I/O Errors, ...)
-
-## *ToDo*
-- [x] Input random
-- [ ] Input user
-- [x] Input text
-
-## *Algorithm*
 
