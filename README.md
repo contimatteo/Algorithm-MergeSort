@@ -8,10 +8,29 @@ Il programma non necessita di una connessione a internet, ma richiede la presenz
 Sia per lo sviluppo che per il testing occorre:
 
 	Aver installato java sulla propria macchina locale
-####  Installazione
+###  Installazione
 Per l'installazione è sufficiente:
 
 	Scaricare il contenuto della repository
 La cartella JavaDoc non è indispensabile, serve solo come guida all'interno del codice.
+
+## Testare il programma
+###  Prima di partire
+###  Testing
+
+## Implementare il programma
+Ri-sviluppare il programma
+
+## Sviluppo
+Come'è stato sviluppato
+
+##  Sviluppato con
+Tecnologie usate
+
+##  Autore
+Conti Matteo
+
+##  Licenza
+Questo programma è stato sviluppato sotto la licenza GNU GENERAL PUBLIC LICENSE (v.3). Leggere 'LICENSE.md' maggiori dettagli.
 
 
