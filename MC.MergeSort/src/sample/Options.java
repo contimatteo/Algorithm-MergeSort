@@ -372,7 +372,7 @@ public class Options
         info.append("\n"); info.append("\n");
         info.append("-------------------------------------------");
         info.append("\n");
-        info.append("ATTENZIONE !! \n"); info.append("\n");info.append("\n");
+        info.append("ATTENZIONE !! \n"); info.append("\n");
         info.append("Istruzioni per la creazione del file di testo:");
         info.append("\n"); info.append("\n");
         info.append("IL FILE DEVE AVERE ESTENSIONE TXT");
