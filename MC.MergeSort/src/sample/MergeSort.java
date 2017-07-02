@@ -43,19 +43,18 @@ public class MergeSort
             {
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (startR + step), sq);
                 //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step); System.out.println(" ");
-                graphics.consoleWriteOutput("\t start Left Array="+startL+", stop Left Array="+(startL+step)+", startRightArray="+startR+", stop Right Array="+(startR + step));
+                graphics.consoleWriteOutput("\t startLeft="+startL+", stopLeft="+(startL+step)+", startRight="+startR+", stopRight="+(startR + step));
                 startL = startR + step;
                 startR = startL + step;
             }
             //System.out.printf("- - - with step = %d", step); System.out.println(" ");
             graphics.consoleWriteOutput("- - - with step = " + step);
 
-            //if(startR < array.length && (startR + step) < array.length)
             if(startR < array.length)
             {
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (array.length), sq);
                 //System.out.printf("* startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, array.length); System.out.println(" "); System.out.println(" ");
-                graphics.consoleWriteOutput("startL="+startL+", stopL="+(startL+step)+", startR="+startR+", stopR="+(startR + step));
+                graphics.consoleWriteOutput("startLeft="+startL+", stopLeft="+(startL+step)+", startRight="+startR+", stopRight="+(startR + step));
             }
             step *= 2;
         }
@@ -88,15 +87,18 @@ public class MergeSort
         left[left.length - 1] = Main.ARRAY_MAX_VALUE;
 
         // Merging the two sorted arrays into the initial one
+        graphics.consoleWriteOutput("Merge two sorted arrays into the initial one");
         for (int k = startL, m = 0, n = 0; k < stopR; ++k) {
             if (left[m] <= right[n]) {
                 array[k] = left[m];
                 list.set(k, leftPane[m]);
+                graphics.consoleWriteOutput("array["+k+"] = left["+m+"] = "+left[m]);
                 transition.getChildren().add(MergeSort.move(leftPane[m], k * Main.SPACING));
                 m++;
             } else {
                 array[k] = right[n];
                 list.set(k, rightPane[n]);
+                graphics.consoleWriteOutput("array["+k+"] = right["+m+"] = "+left[n]);
                 transition.getChildren().add(MergeSort.move(rightPane[n], k * Main.SPACING));
                 n++;
             }

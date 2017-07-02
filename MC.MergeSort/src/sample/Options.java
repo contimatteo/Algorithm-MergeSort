@@ -126,7 +126,8 @@ public class Options
         Label arrayTitle = new Label("SCEGLIERE UN METODO DI INPUT");
         Label arraySubTitle = new Label(" attenzione inserire un numero compreso tra 1 e 2 \n" +
                 " 1: generazione automatica di un array random \n" +
-                " 2: ricavo l'array dal file input.txt ");
+                " 2: ricavo l'array dal file input.txt \n " +
+                " 3: inserimento manuale dei numeri (dimensione < 40)");
         arrayTitle.setTextFill(Color.AZURE);
         arraySubTitle.setTextFill(Color.AZURE);
         arrayTitle.setAlignment(Pos.CENTER);
@@ -217,7 +218,11 @@ public class Options
                             //System.out.println("Array: " + stringArray);
                             String[] numbersOfArray = stringArray.split("-");
                             if(numbersOfArray.length>1) {
-                                a = new int[numbersOfArray.length];
+                                int length = numbersOfArray.length;
+                                // not allow array's size > 40
+                                if(length>40)
+                                    length=40;
+                                a = new int[length];
                                 for (int i = 0; i < a.length; i++)
                                 {
                                     try {
@@ -359,13 +364,11 @@ public class Options
         info.append("\n");
         info.append("permette di generare l'array di partenza a partire da un file di testo (opzione 2)");
         info.append("\n"); info.append("\n");
-        info.append("Inoltre nel caso di input da file di testo verranno considerati al massimo i primi 40 numeri");
+        info.append("Nel caso di input da file di testo verranno considerati al massimo i primi 40 numeri");
         info.append("\n"); info.append("\n");
-        info.append("Nel caso in cui venisse scelta l'opzione due ma il file non fosse presente l'algoritmo passerà");
-        info.append("\n");
-        info.append("direttamente all'opzione 1 (array generato casualmente)");
+        info.append("Nel caso di input da tastiera verranno considerati i primi 40 numeri");
         info.append("\n"); info.append("\n");
-        info.append("Per entrambe le opzioni è possibile decidere la dimensione (minore di 40) dell'array generato");
+        info.append("Per tutte le opzioni è possibile decidere la dimensione (minore di 40) dell'array generato");
         info.append("\n"); info.append("\n");info.append("\n");
         info.append("-------------------------------------------");
         info.append("\n");info.append("\n");
