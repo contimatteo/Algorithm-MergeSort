@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import java.util.Optional;
 
 
 /**
@@ -201,23 +202,83 @@ public class Options
                     }
                     if((method==3))
                     {
-                        Alert alert = new Alert(AlertType.WARNING);
-                        alert.setTitle("Attenzione");
-                        alert.setContentText("Opzione non ancora implementata, passo alla 1");
-                        alert.showAndWait();
-                        method=1;
-                    }
+                        TextInputDialog dialog = new TextInputDialog("walter");
+                        dialog.setTitle("Inserimento manuale ");
+                        dialog.setHeaderText("Inserisci i numeri separati da un '-' ");
+                        dialog.setContentText("Please enter your name:");
+                        // Traditional way to get the response value.
+                        Optional<String> result = dialog.showAndWait();
+                        int[] a = null;
+                        boolean allGoesOk=false;
+                        if (result.isPresent())
+                        {
+                            String stringArray = result.get();
+                            stringArray = stringArray.replaceAll("\\s+","");
+                            //System.out.println("Array: " + stringArray);
+                            String[] numbersOfArray = stringArray.split("-");
+                            if(numbersOfArray.length>1) {
+                                a = new int[numbersOfArray.length];
+                                for (int i = 0; i < a.length; i++)
+                                {
+                                    try {
 
-                    Main.sceltaInputOptions(method);
-                    myStage.close();
-                    myPrimaryStage.show();
-                    return;
+                                        a[i] = Integer.parseInt(numbersOfArray[i]);
+                                    }
+                                    catch (NumberFormatException ex)
+                                    {
+                                        System.out.println(ex.getMessage());
+                                    } finally
+                                    {
+                                        if (a.length < 2)
+                                        {
+                                            Alert alert = new Alert(AlertType.WARNING);
+                                            alert.setTitle("Attenzione");
+                                            alert.setHeaderText("Errore nell'inserimento dell'array");
+                                            alert.setContentText("Non è possibile creare l'array inserito controllare bene di aver inserito solo numeri " +
+                                                    "e di aver rispettato tutte le specifiche.");
+                                            alert.showAndWait();
+
+                                        }
+                                        if(a.length > 1)
+                                            allGoesOk = true;
+                                    }
+                                }
+                            }
+                        }
+                        if(allGoesOk)
+                        {
+                            Main.sceltaInputOptions(method, a);
+                            myStage.close();
+                            myPrimaryStage.show();
+                            return;
+                        }
+                        else
+                        {
+                            Alert alert = new Alert(AlertType.WARNING);
+                            alert.setTitle("Attenzione");
+                            alert.setHeaderText("Errore nell'inserimento dell'array");
+                            alert.setContentText("E' possibile inserire un array di soli numeri");
+                            alert.showAndWait();
+                            btn.setDisable(false);
+                            Main.sceltaInputOptions(0, null);
+                        }
+                    }
+                    else
+                    {
+                        // method is 1 or 2
+                        Main.sceltaInputOptions(method, null);
+                        myStage.close();
+                        myPrimaryStage.show();
+                        return;
+                    }
                 }
+                else
                 {
                     Alert alert = new Alert(AlertType.WARNING);
                     alert.setTitle("Attenzione");
                     alert.setHeaderText("Input non validi");
-                    alert.setContentText("Leggere attentamente le istruzioni e assicurarsi di rispettare i limiti di input");
+                    alert.setContentText("Leggere attentamente le istruzioni e assicurarsi di non inserire una dimensione superiore a 40 e" +
+                                         " e di scegliere tra le opzioni [1, 2, 3]");
                     alert.showAndWait();
                     btn.setDisable(false);
                     return;

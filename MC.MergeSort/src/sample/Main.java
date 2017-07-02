@@ -48,21 +48,19 @@ public class Main extends Application {
     public Stage firstStage;
     Graphics graphics;
 
-    public void exitDialog()
-    {
-
-    }
 
     int scelta=0;
-    public static void sceltaInputOptions(int scelta)
+    public static void sceltaInputOptions(int scelta, int[] case3Array)
     {
         switch(scelta)
         {
             case 1:
+                stopExecution=false;
                 Input.createInput(ARRAY_LENGHT, ARRAY_MAX_VALUE);
                 break;
 
             case 2:
+                stopExecution=false;
                 try
                 {
                     File dir = new File(".");
@@ -71,21 +69,26 @@ public class Main extends Application {
                 }
                 catch (FileNotFoundException ex)
                 {
-                    Main.sceltaInputOptions(1);
+                    Main.sceltaInputOptions(1, null);
                     System.out.println("Eccezzione generata nel trovare il file --> " + ex.getMessage());
                 }
                 catch (IOException ex) {
-                    Main.sceltaInputOptions(1);
+                    Main.sceltaInputOptions(1, null);
                     System.out.println("Eccezzione generata --> " + ex.getMessage());
                 }
                 break;
 
             case 3:
-                stopExecution=true;
+                stopExecution=false;
+                if(case3Array!=null)
+                    Input.createInput(case3Array);
+                else
+                    sceltaInputOptions(1, null);
+
                 break;
 
             default:
-                //sceltaInputOptions();
+                stopExecution=true;
                 break;
         }
     }
@@ -100,7 +103,7 @@ public class Main extends Application {
                 return;
             }
         });
-        if(stopExecution=true) {
+        if(stopExecution!=true) {
             if (arrayInput.length > 0) {
                 try {
                     // GRAFICA
