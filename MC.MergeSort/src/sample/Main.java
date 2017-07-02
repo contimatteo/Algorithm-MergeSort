@@ -1,7 +1,7 @@
 package sample;
 
 /**
- * Created by @author Conti Matteo on ${DATE}.
+ * Created by @author Conti Matteo on {2 July 2017}.
  */
 
 import javafx.animation.SequentialTransition;
