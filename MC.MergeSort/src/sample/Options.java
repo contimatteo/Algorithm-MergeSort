@@ -97,7 +97,7 @@ public class Options
         inputContainer.setPrefWidth((Main.windowWidth/2)-15);
         inputContainer.setStyle("-fx-background-color:rgb(43, 43, 43);");
         inputContainer.setAlignment(Pos.CENTER_LEFT);
-        inputContainer.setSpacing(100);
+        inputContainer.setSpacing(30);
     }
 
     public void setInputContainerDetail()
@@ -124,7 +124,7 @@ public class Options
         container2.setPrefWidth((Main.windowWidth/2)-15);
         container2.setSpacing(25);
         Label arrayTitle = new Label("SCEGLIERE UN METODO DI INPUT");
-        Label arraySubTitle = new Label(" attenzione inserire un numero compreso tra 1 e 2 \n" +
+        Label arraySubTitle = new Label(" attenzione inserire un numero compreso tra 1 e 3 \n" +
                 " 1: generazione automatica di un array random \n" +
                 " 2: ricavo l'array dal file input.txt \n " +
                 " 3: inserimento manuale dei numeri (dimensione < 40)");
@@ -353,9 +353,9 @@ public class Options
     {
         StringBuilder info = new StringBuilder();
         info.append("INFORMAZIONI UTILI");
-        info.append("\n"); info.append("\n");
+        info.append("\n");
         info.append("-------------------------------------------");
-        info.append("\n");info.append("\n");
+        info.append("\n");
         info.append("Per un'esecuzione ottimale del programma si consiglia di verificare che: ");
         info.append("\n"); info.append("\n");
         info.append("sia presente il un file chiamato 'input.txt' collocato nella directory in cui si sta eseguendo il programma");
@@ -369,9 +369,9 @@ public class Options
         info.append("Nel caso di input da tastiera verranno considerati i primi 40 numeri");
         info.append("\n"); info.append("\n");
         info.append("Per tutte le opzioni è possibile decidere la dimensione (minore di 40) dell'array generato");
-        info.append("\n"); info.append("\n");info.append("\n");
+        info.append("\n"); info.append("\n");
         info.append("-------------------------------------------");
-        info.append("\n");info.append("\n");
+        info.append("\n");
         info.append("ATTENZIONE !! \n"); info.append("\n");info.append("\n");
         info.append("Istruzioni per la creazione del file di testo:");
         info.append("\n"); info.append("\n");
