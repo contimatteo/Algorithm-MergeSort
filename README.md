@@ -28,7 +28,7 @@ Creare un file di testo del tipo
 Copiare il file nella stessa cartella in cui risiedono i file estratti
 
 ###  Testing
-Seguire le istruzioni in ordine e non saltare nessuno ateo nella configurazione.
+Seguire le istruzioni in ordine e non saltare nessuno step nella configurazione.
 ####  Avviare il programma
 
 	Eseguire il file "MC_MergeSort.jar"
