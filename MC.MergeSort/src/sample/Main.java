@@ -30,7 +30,7 @@ public class Main extends Application {
     public  static  final     int           SORT_GROUP_MOVE_DELTA       = 105;
     public  static  final     int           SORT_GROUP_MARGIN_DELTA     = 35;
     public  static            Duration      SPEED                       = Duration.millis(200);
-    public  static            int           ARRAY_LENGHT                = 40;
+    public  static            int           ARRAY_LENGHT                = 35;
     public  static            int           ARRAY_MAX_VALUE             = 400;
 
     public  static            int           windowWidth                 = 0;
@@ -46,7 +46,7 @@ public class Main extends Application {
     //public Input input;
     public Stage dialog;
     public Stage firstStage;
-    Graphics graphics;
+    public Graphics graphics;
 
 
     int scelta=0;
@@ -103,7 +103,7 @@ public class Main extends Application {
                 return;
             }
         });
-        if(stopExecution!=true) {
+        if(!stopExecution) {
             if (arrayInput.length > 0) {
                 try {
                     // GRAFICA
@@ -111,9 +111,10 @@ public class Main extends Application {
                     graphics.createGraphics(arrayInput, primaryStage);
                     // ALGORITMO
                     MergeSort algorithm = new MergeSort(graphics);
-                    graphics.consoleWriteException(">> eccezzione");
-                } catch (RuntimeException ex) {
-                    System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage());
+                }
+                catch (RuntimeException ex1)
+                {
+                    System.out.println("Eccezzione generata --> " + ex1.getLocalizedMessage());
                 }
             }
         }
@@ -146,7 +147,15 @@ public class Main extends Application {
         primaryStage.setOnShown(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent e) {
                 primaryStage.close();
-                launcProgram(primaryStage);
+                try
+                {
+                    launcProgram(primaryStage);
+                }
+                catch(NullPointerException ex)
+                {
+                    System.out.println("Eccezione Generata --> " + ex.getMessage());
+                }
+
             }
         });
     }
