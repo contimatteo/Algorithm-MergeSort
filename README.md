@@ -63,13 +63,9 @@ Per implementare direttamente i codici sorgente:
 
 	Estrarre il contenuto della cartella "Classes"
 
-Per sviluppare il progetto in IntelliJ§:
+Per sviluppare il progetto in IntelliJ o in Eclipse:
 
 	Estrarre la cartella "MC.MergeSort"
-
-Per sviluppare il progetto in Eclipse:
-
-	Estrarre la cartella "Eclipse"
 
 ## Sviluppo
 Sviluppo dell'algoritmo MergeSort e implementato attraverso la sua esecuzione tramite rappresentazione grafica.
