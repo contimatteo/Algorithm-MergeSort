@@ -63,6 +63,10 @@ public class Graphics
     public  Label                    consoleExceptionLabel;
     public ScrollPane                consoleApplicationScroll;
     public ScrollPane                consoleExceptionScroll;
+    public Graphics                  graphics;
+
+    // for catching exception
+    public Label exception;
     // *****************************************************************************************************************
     public  static  StringBuilder consoleText;
     public void createConsoleOutput()
@@ -81,7 +85,7 @@ public class Graphics
 
     public void consoleWriteOutput(String msg)
     {
-        consoleText.append(">> " + msg);
+        consoleText.append('\t' + ">> " + msg);
         consoleText.append("\n");
         consoleText.append("\n");
         consoleOutputLabel.setText(consoleText.toString());
@@ -132,6 +136,9 @@ public class Graphics
     // BUTTON STEP
     public SequentialTransition mergeSortOneStep(int array[], ArrayList<StackPane> list, SequentialTransition seqTrans)
     {
+        if(step==1)
+            consoleWriteOutput("Modalità : STEP BY STEP");
+
         mergeTemp.mergeSortStep(array, seqTrans, list, step);
         step *= 2;
 
@@ -141,9 +148,12 @@ public class Graphics
     // BUTTON MOTION
     public SequentialTransition mergeSortAllElements(int array[], ArrayList<StackPane> list, SequentialTransition seqTrans)
     {
+        consoleWriteOutput("Modalità : MOTION");
         mergeTemp.mergeSortMotion(array, seqTrans, list);
         return seqTrans;
     }
+
+    //******************************************************************************************************************
 
     private StackPane createValueSingleNode(int position, int number)
     {
@@ -176,28 +186,64 @@ public class Graphics
 
     public void setButtonStepByStep(int[] array)
     {
+        exception = null;
         buttonStepByStep = new Button("Step-by-Stepy");
         buttonStepByStep.setStyle("-fx-background-color: #00c9ff;");
-        buttonStepByStep.setOnAction(event -> {
-            SequentialTransition    transition = new SequentialTransition();
-            transition = mergeSortOneStep(array, arrayCells, transition);
-            buttonStepByStep.setDisable(true);
-            transition.play();
-            transition.setOnFinished(event1 -> buttonStepByStep.setDisable(false));
-            buttonStepByStep.setDisable(false);
+        buttonStepByStep.setOnAction(event ->
+        {
+            try
+            {
+                SequentialTransition transition1 = new SequentialTransition();
+                transition1 = mergeSortOneStep(array, arrayCells, transition1);
+                buttonStepByStep.setDisable(true);
+                transition1.play();
+                transition1.setOnFinished(event1 -> buttonStepByStep.setDisable(false));
+                //buttonStepByStep.setDisable(false);
+                exception=new Label("Tutto ok");
+            }
+             catch(NullPointerException ex)
+            {
+                System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage() + " - Caused by: " + ex.getCause());
+                //throw ex;
+            }
+            finally
+            {
+                if(exception==null)
+                    consoleWriteException("Eccezzione generata --> Causate nella generazione dell'animazione per il bottone Step-by-Step");
+                else
+                    exception = null;
+            }
         });
     }
+
     public void setButtonMotion(int[] array)
     {
         buttonMotion = new Button("Motion");
         buttonMotion.setStyle("-fx-background-color: #00c9ff;");
         buttonMotion.setOnAction(event ->
         {
-            SequentialTransition    transition = new SequentialTransition();
-            transition = mergeSortAllElements(array, arrayCells, transition);
-            transition.play();
-            transition.setOnFinished(event1 -> buttonStepByStep.setDisable(false));
-            buttonMotion.setDisable(false);
+            try
+            {
+                SequentialTransition transition2 = new SequentialTransition();
+                transition2 = mergeSortAllElements(array, arrayCells, transition2);
+                transition2.play();
+                transition2.setOnFinished(event1 -> buttonStepByStep.setDisable(false));
+                exception = new Label("Titto ok");
+            }
+            catch(NullPointerException ex)
+            {
+                System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage() + " - Caused by: " + ex.getCause());
+            }
+            finally
+            {
+                if(exception==null)
+                {
+                    consoleWriteException("Eccezzione generata --> Causate nella generazione dell'animazione per il bottone Motion");
+                    setButtonMotion(array);
+                }
+                else
+                    exception = null;
+            }
         });
     }
 
@@ -218,10 +264,24 @@ public class Graphics
             {
                 time = Integer.parseInt(newValue);
                 Main.SPEED=Duration.millis(time);
+                exception = new Label("Ok");
             }
-            catch (NumberFormatException ex)
-            {   }
-            //System.out.println("textfield changed from " + oldValue + " to " + newValue);
+            catch (NumberFormatException ex1)
+            {
+                consoleWriteException(ex1.getMessage() + "Caused by: " + ex1.getCause());
+            }
+            catch(NullPointerException ex2)
+            {
+                consoleWriteException(ex2.getMessage() + "Caused by: " + ex2.getCause());
+            }
+            finally
+            {
+                if(exception==null)
+                    consoleWriteException("Eccezzione generata --> Causata nell'impostazione della durata della transizione");
+                else
+                    exception = null;
+            }
+
         });
         durationContainer.getChildren().addAll(durationText, durationTransition);
     }
@@ -348,6 +408,5 @@ public class Graphics
         setStage(s);
         return stage;
     }
-
 
 }

@@ -1,5 +1,9 @@
 package sample;
 
+/**
+ * Created by @author Conti Matteo on {2 July 2017}.
+ */
+
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -26,7 +30,7 @@ public class Main extends Application {
     public  static  final     int           SORT_GROUP_MOVE_DELTA       = 105;
     public  static  final     int           SORT_GROUP_MARGIN_DELTA     = 35;
     public  static            Duration      SPEED                       = Duration.millis(200);
-    public  static            int           ARRAY_LENGHT                = 40;
+    public  static            int           ARRAY_LENGHT                = 35;
     public  static            int           ARRAY_MAX_VALUE             = 400;
 
     public  static            int           windowWidth                 = 0;
@@ -42,23 +46,21 @@ public class Main extends Application {
     //public Input input;
     public Stage dialog;
     public Stage firstStage;
-    Graphics graphics;
+    public Graphics graphics;
 
-    public void exitDialog()
-    {
-
-    }
 
     int scelta=0;
-    public static void sceltaInputOptions(int scelta)
+    public static void sceltaInputOptions(int scelta, int[] case3Array)
     {
         switch(scelta)
         {
             case 1:
+                stopExecution=false;
                 Input.createInput(ARRAY_LENGHT, ARRAY_MAX_VALUE);
                 break;
 
             case 2:
+                stopExecution=false;
                 try
                 {
                     File dir = new File(".");
@@ -67,17 +69,26 @@ public class Main extends Application {
                 }
                 catch (FileNotFoundException ex)
                 {
-                    Main.sceltaInputOptions(1);
+                    Main.sceltaInputOptions(1, null);
                     System.out.println("Eccezzione generata nel trovare il file --> " + ex.getMessage());
                 }
                 catch (IOException ex) {
-                    Main.sceltaInputOptions(1);
+                    Main.sceltaInputOptions(1, null);
                     System.out.println("Eccezzione generata --> " + ex.getMessage());
                 }
                 break;
 
+            case 3:
+                stopExecution=false;
+                if(case3Array!=null)
+                    Input.createInput(case3Array);
+                else
+                    sceltaInputOptions(1, null);
+
+                break;
+
             default:
-                //sceltaInputOptions();
+                stopExecution=true;
                 break;
         }
     }
@@ -92,7 +103,7 @@ public class Main extends Application {
                 return;
             }
         });
-        if(stopExecution=true) {
+        if(!stopExecution) {
             if (arrayInput.length > 0) {
                 try {
                     // GRAFICA
@@ -100,8 +111,10 @@ public class Main extends Application {
                     graphics.createGraphics(arrayInput, primaryStage);
                     // ALGORITMO
                     MergeSort algorithm = new MergeSort(graphics);
-                } catch (RuntimeException ex) {
-                    System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage());
+                }
+                catch (RuntimeException ex1)
+                {
+                    System.out.println("Eccezzione generata --> " + ex1.getLocalizedMessage());
                 }
             }
         }
@@ -111,6 +124,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        stopExecution=false;
         firstStage=primaryStage;
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -133,7 +147,15 @@ public class Main extends Application {
         primaryStage.setOnShown(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent e) {
                 primaryStage.close();
-                launcProgram(primaryStage);
+                try
+                {
+                    launcProgram(primaryStage);
+                }
+                catch(NullPointerException ex)
+                {
+                    System.out.println("Eccezione Generata --> " + ex.getMessage());
+                }
+
             }
         });
     }

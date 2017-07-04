@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import java.util.Optional;
 
 
 /**
@@ -96,7 +97,7 @@ public class Options
         inputContainer.setPrefWidth((Main.windowWidth/2)-15);
         inputContainer.setStyle("-fx-background-color:rgb(43, 43, 43);");
         inputContainer.setAlignment(Pos.CENTER_LEFT);
-        inputContainer.setSpacing(100);
+        inputContainer.setSpacing(30);
     }
 
     public void setInputContainerDetail()
@@ -107,13 +108,13 @@ public class Options
         container1.setSpacing(25);
         Label inputTitle = new Label("SCEGLIERE LA DIMENSIONE DELL'ARRAY");
         Label inputSubTitle = new Label(" attenzione per ragioni grafiche non è possibile inserire " +
-                " una dimensione superiore a 40 ");
+                                             " una dimensione superiore a " + Integer.toString(Main.ARRAY_LENGHT));
         inputTitle.setTextFill(Color.AZURE);
         inputSubTitle.setTextFill(Color.AZURE);
         inputTitle.setAlignment(Pos.CENTER);
         // input array's size
         inputArraySize = new TextField ();
-        inputArraySize.setText("40");
+        inputArraySize.setText("20");
         inputArraySize.setMaxWidth(150);
         container1.getChildren().addAll(inputTitle, inputSubTitle, inputArraySize);
         //inputArraySize.clear();
@@ -123,9 +124,10 @@ public class Options
         container2.setPrefWidth((Main.windowWidth/2)-15);
         container2.setSpacing(25);
         Label arrayTitle = new Label("SCEGLIERE UN METODO DI INPUT");
-        Label arraySubTitle = new Label(" attenzione inserire un numero compreso tra 1 e 2 \n" +
+        Label arraySubTitle = new Label(" attenzione inserire un numero compreso tra 1 e 3 \n" +
                 " 1: generazione automatica di un array random \n" +
-                " 2: ricavo l'array dal file input.txt ");
+                " 2: ricavo l'array dal file input.txt \n " +
+                " 3: inserimento manuale dei numeri (dimensione < "+ Integer.toString(Main.ARRAY_LENGHT) +")");
         arrayTitle.setTextFill(Color.AZURE);
         arraySubTitle.setTextFill(Color.AZURE);
         arrayTitle.setAlignment(Pos.CENTER);
@@ -156,7 +158,7 @@ public class Options
         btn.setText(" Start ");
         btn.setMinWidth(50);
         btn.setAlignment(Pos.CENTER);
-        size = 40;   method = 1;
+        size =Main.ARRAY_LENGHT;   method = 1;
         btn.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
@@ -170,19 +172,23 @@ public class Options
                     file = fileInputName.getText();
                 }
                 catch (NumberFormatException ex)
-                {   }
-                if((method>0)&&(method<3)&&(size>0)&&(size<=40))
+                {
+                    System.out.println("Eccezione generata --> " + ex.getMessage());
+                }
+                if((method>0)&&(method<4)&&(size>0)&&(size<=Main.ARRAY_LENGHT))
                 {
                     Main.fileName=file;
                     Main.ARRAY_LENGHT=size;
                     Main.ARRAY_MAX_VALUE = size * 5;
-                    File file = new File(Main.fileName + ".txt");
-                    if(method==2) {
+                    if(method==2)
+                    {
+                        File file = new File(Main.fileName + ".txt");
                         try {
                             File dir = new File(".");
                             file = new File(dir.getCanonicalPath() + File.separator + Main.fileName + ".txt");
                         }
-                        catch (IOException ex) {
+                        catch (IOException ex)
+                        {
                             System.out.println("Eccezzione generata --> " + ex.getMessage());
                         }
                         finally
@@ -198,14 +204,89 @@ public class Options
                             }
                         }
                     }
-
-                    Main.sceltaInputOptions(method);
-                    myStage.close();
-                    myPrimaryStage.show();
-                    return;
+                    if((method==3))
+                    {
+                        TextInputDialog dialog = new TextInputDialog("1-2");
+                        dialog.setTitle("Inserimento manuale ");
+                        dialog.setHeaderText("Inserisci i numeri separati da un '-' ");
+                        //dialog.setContentText("Please enter your name:");
+                        Optional<String> result = dialog.showAndWait();
+                        int[] a = null;
+                        boolean allGoesOk=false;
+                        if (result.isPresent())
+                        {
+                            String stringArray = result.get();
+                            stringArray = stringArray.replaceAll("\\s+","");
+                            String[] numbersOfArray = stringArray.split("-");
+                            if(numbersOfArray.length>1) {
+                                int length = numbersOfArray.length;
+                                // not allow array's size > Main.ARRAY_LENGHT
+                                if(length>Main.ARRAY_LENGHT)
+                                    length=Main.ARRAY_LENGHT;
+                                a = new int[length];
+                                for (int i = 0; i < a.length; i++)
+                                {
+                                    try
+                                    {
+                                        a[i] = Integer.parseInt(numbersOfArray[i]);
+                                    }
+                                    catch (NumberFormatException ex)
+                                    {
+                                        System.out.println("Eccezione generata" + ex.getMessage());
+                                    }
+                                    finally
+                                    {
+                                        if (a.length < 2)
+                                        {
+                                            Alert alert = new Alert(AlertType.WARNING);
+                                            alert.setTitle("Attenzione");
+                                            alert.setHeaderText("Errore nell'inserimento dell'array");
+                                            alert.setContentText("Non è possibile creare l'array inserito controllare bene di aver inserito solo numeri " +
+                                                                 "e di aver rispettato tutte le specifiche.");
+                                            alert.showAndWait();
+                                        }
+                                        if(a.length > 1)
+                                            allGoesOk = true;
+                                    }
+                                }
+                            }
+                        }
+                        if(allGoesOk)
+                        {
+                            Main.sceltaInputOptions(method, a);
+                            myStage.close();
+                            myPrimaryStage.show();
+                            return;
+                        }
+                        else
+                        {
+                            Alert alert = new Alert(AlertType.WARNING);
+                            alert.setTitle("Attenzione");
+                            alert.setHeaderText("Errore nell'inserimento dell'array");
+                            alert.setContentText("E' possibile inserire un array di soli numeri");
+                            alert.showAndWait();
+                            btn.setDisable(false);
+                            Main.sceltaInputOptions(0, null);
+                        }
+                    }
+                    else
+                    {
+                        // method is 1 or 2
+                        Main.sceltaInputOptions(method, null);
+                        myStage.close();
+                        myPrimaryStage.show();
+                        return;
+                    }
                 }
+                else
                 {
-                    System.out.println("input non validi");
+                    Alert alert = new Alert(AlertType.WARNING);
+                    alert.setTitle("Attenzione");
+                    alert.setHeaderText("Input non validi");
+                    alert.setContentText("Leggere attentamente le istruzioni e assicurarsi di non inserire una dimensione superiore a " +
+                            Integer.toString(Main.ARRAY_LENGHT)  +" e" +
+                                         " e di scegliere tra le opzioni [1, 2, 3]");
+                    alert.showAndWait();
                     btn.setDisable(false);
                     return;
                 }
@@ -219,20 +300,32 @@ public class Options
                 btn.setDisable(false);
                 int option = Integer.parseInt(newValue);
                 if(option==1)
+                {
+                    inputArraySize.setDisable(false);
                     fileInputName.setDisable(true);
+                }
                 if(option==2)
+                {
+                    inputArraySize.setDisable(true);
                     fileInputName.setDisable(false);
-                if((option<1)||(option>2))
+                }
+                if(option==3)
+                {
+                    inputArraySize.setDisable(true);
+                    fileInputName.setDisable(true);
+                }
+
+                if((option<1)||(option>3))
                     btn.setDisable(true);
 
             }
             catch (NumberFormatException ex)
-            {   }
-            //System.out.println("textfield changed from " + oldValue + " to " + newValue);
+            {
+                System.out.println("Eccezione generata -->" + ex.getMessage());
+            }
         });
         container2.getChildren().addAll(arrayTitle, arraySubTitle, inputMethod, fileNameLabel, fileInputName);
         container3.getChildren().addAll(buttonInstruction, btn);
-
         inputContainer.getChildren().addAll(container1, container2, container3);
     }
 
@@ -272,28 +365,26 @@ public class Options
     {
         StringBuilder info = new StringBuilder();
         info.append("INFORMAZIONI UTILI");
-        info.append("\n"); info.append("\n");
+        info.append("\n");
         info.append("-------------------------------------------");
-        info.append("\n");info.append("\n");
+        info.append("\n");
         info.append("Per un'esecuzione ottimale del programma si consiglia di verificare che: ");
         info.append("\n"); info.append("\n");
-        info.append("sia presente il un file chiamato 'input.txt' collocato nella directory in cui si sta eseguendo il programma");
+        info.append("sia presente il un file '.txt' collocato nella directory in cui si sta eseguendo il programma");
         info.append("\n");info.append("\n");
         info.append("si ricorda che la presenza di questo file non impedisce l'esecuzione del programma ma non ");
         info.append("\n");
         info.append("permette di generare l'array di partenza a partire da un file di testo (opzione 2)");
         info.append("\n"); info.append("\n");
-        info.append("Inoltre nel caso di input da file di testo verranno considerati al massimo i primi 40 numeri");
+        info.append("Nel caso di input da file di testo verranno considerati al massimo i primi"+ Integer.toString(Main.ARRAY_LENGHT) +"numeri");
         info.append("\n"); info.append("\n");
-        info.append("Nel caso in cui venisse scelta l'opzione due ma il file non fosse presente l'algoritmo passerà");
-        info.append("\n");
-        info.append("direttamente all'opzione 1 (array generato casualmente)");
+        info.append("Nel caso di input da tastiera verranno considerati i primi "+ Integer.toString(Main.ARRAY_LENGHT) +" numeri");
         info.append("\n"); info.append("\n");
-        info.append("Per entrambe le opzioni è possibile decidere la dimensione (minore di 40) dell'array generato");
-        info.append("\n"); info.append("\n");info.append("\n");
+        info.append("Per tutte le opzioni è possibile decidere la dimensione (minore di "+ Integer.toString(Main.ARRAY_LENGHT) +") dell'array generato");
+        info.append("\n"); info.append("\n");
         info.append("-------------------------------------------");
-        info.append("\n");info.append("\n");
-        info.append("ATTENZIONE !! \n"); info.append("\n");info.append("\n");
+        info.append("\n");
+        info.append("ATTENZIONE !! \n"); info.append("\n");
         info.append("Istruzioni per la creazione del file di testo:");
         info.append("\n"); info.append("\n");
         info.append("IL FILE DEVE AVERE ESTENSIONE TXT");
