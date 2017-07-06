@@ -1,16 +1,10 @@
 package sample;
 
-import com.sun.scenario.effect.Merge;
 import javafx.animation.SequentialTransition;
-import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -23,18 +17,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TextField;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.stage.Screen;
-import javafx.geometry.Rectangle2D;
 import javafx.util.Duration;
-import java.util.TimerTask;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 import java.util.ArrayList;
@@ -380,7 +366,8 @@ public class Graphics
         stage.setX(Main.windowX);
         stage.setY(Main.windowY);
         stage.setWidth(Main.windowWidth);
-        stage.setHeight(Main.windowHeight-42);
+        //stage.setHeight(Main.windowHeight-42);
+        stage.setHeight(Main.windowHeight);
         stage.setScene(scene);
         stage.show();
     }

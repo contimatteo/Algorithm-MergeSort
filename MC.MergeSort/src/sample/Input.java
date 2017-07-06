@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.File;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+
 public class Input
 {
 
@@ -38,7 +41,7 @@ public class Input
     // 3: array readed by text file
     public static void createInput(File file)
     {
-        int i=0;
+        int i=0; int j=0; int currentNumber=0;
         int cont=-1;
         String line = "";
         try
@@ -58,28 +61,47 @@ public class Input
                 cont=Main.ARRAY_LENGHT;
             Main.arrayInput= new int[cont];
             line = "";
+            Label exception = null;
             while (i<cont)
             {
                 try
                 {
-                    line = line = buffer.readLine();
-                    Main.arrayInput[i] = Integer.parseInt(line);
-                    //System.out.println(line);
+                    line = buffer.readLine();
+                    currentNumber = Integer.parseInt(line);
+                    if (currentNumber!=0) {
+                        Main.arrayInput[j] = currentNumber;
+                        j++;
+                    }
                     i++;
+                    exception=new Label("Tutto ok");
                 }
                 catch (NumberFormatException ex)
                 {
                     System.out.println("Eccezione generata dalla conversione dei valori nel file di testo --> " + ex.getLocalizedMessage());
+                }
+                finally
+                {
+                    if(exception==null)
+                    {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Attenzione");
+                        alert.setHeaderText("Eccezione Generata nella lettura del file di testo in input");
+                        alert.setContentText("controllare che ogni riga contenga solo numeri \n riga interessata: " + (i+1));
+                        alert.showAndWait();
+                        i++;
+                    }
+                    else
+                        exception = null;
                 }
             }
             buffer.close();
         }
         catch (FileNotFoundException ex)
         {
-            System.out.println("Eccezione generata --> " + ex.getMessage());
+            System.out.println("Eccezione generata nella ricerca del file di testo nella directory corrente --> " + ex.getMessage());
         }
         catch (IOException ex) {
-            System.out.println("Eccezione generata --> " + ex.getMessage());
+            System.out.println("Eccezione generata dalla conversione dei valori nel file di testo --> " + ex.getMessage());
         }
     }
 

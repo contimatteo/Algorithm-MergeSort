@@ -25,11 +25,8 @@ public class MergeSort
     public StackPane[] helperNodes;
     public Graphics graphics;
 
-
-    // *****************************************************************************************************************
-    // *****************************************************************************************************************
-    // *****************************************************************************************************************
-    // *****************************************************************************************************************
+// *********************************************************************************************************************
+// *********************************************************************************************************************
 
     // MOTION
     public void mergeSortMotion(int[] array, SequentialTransition sq, ArrayList<StackPane> list)
@@ -50,8 +47,8 @@ public class MergeSort
             while(startR + step < array.length)
             {
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (startR + step), sq);
-                //System.out.printf("startL=%d, stopL=%d, startR=%d, stopR=%d", startL, startL + step, startR, startR + step); System.out.println(" ");
-                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="+startR+"]-[stopRight="+(startR + step)+"]");
+                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="
+                                                   +startR+"]-[stopRight="+(startR + step)+"]");
                 startL = startR + step;
                 startR = startL + step;
             }
@@ -60,7 +57,8 @@ public class MergeSort
             if(startR < array.length)
             {
                 mergeSortArraysAlreadySortedMotion(array, list, startL, (startL + step), startR, (array.length), sq);
-                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="+startR+"]-[stopRight="+(startR + step)+"]");
+                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="
+                                                   +startR+"]-[stopRight="+(startR + step)+"]");
             }
             step *= 2;
         }
@@ -78,7 +76,8 @@ public class MergeSort
     }
 
     // MOTION
-    public void mergeSortArraysAlreadySortedMotion(int[] array, ArrayList<StackPane> list, int startL, int stopL, int startR, int stopR, SequentialTransition transition)
+    public void mergeSortArraysAlreadySortedMotion(int[] array, ArrayList<StackPane> list, int startL, int stopL, int startR,
+                                                   int stopR, SequentialTransition transition)
     {
         // Additional arrays needed for merging
         int[] right = new int[stopR - startR + 1];
@@ -142,10 +141,8 @@ public class MergeSort
         transition.getChildren().add(moveUp);
     }
 
-    // *****************************************************************************************************************
-    // *****************************************************************************************************************
-    // *****************************************************************************************************************
-    // *****************************************************************************************************************
+// *********************************************************************************************************************
+// *********************************************************************************************************************
 
     // STEP-BY-STEP
     public void mergeSortStep(int[] array, SequentialTransition sq, ArrayList<StackPane> list, int step)
@@ -165,7 +162,8 @@ public class MergeSort
             while(startR + step < array.length)
             {
                 mergeSortArraysAlreadySortedStep(array, list, startL, (startL + step), startR, (startR + step), sq);
-                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="+startR+"]-[stopRight="+(startR + step)+"]");
+                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="
+                                                   +startR+"]-[stopRight="+(startR + step)+"]");
                 startL = startR + step;
                 startR = startL + step;
             }
@@ -173,7 +171,8 @@ public class MergeSort
             if(startR < array.length)
             {
                 mergeSortArraysAlreadySortedStep(array, list, startL, (startL + step), startR, (array.length), sq);
-                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="+startR+"]-[stopRight="+(startR + step)+"]");
+                graphics.consoleWriteOutput("[startLeft="+startL+"]-[stopLeft="+(startL+step)+"]-[startRight="
+                                                   +startR+"]-[stopRight="+(startR + step)+"]");
             }
         }
         else
@@ -192,7 +191,8 @@ public class MergeSort
     }
 
     // STEP-BY-STEP
-    public void mergeSortArraysAlreadySortedStep(int[] array, ArrayList<StackPane> list, int startL, int stopL, int startR, int stopR, SequentialTransition transition)
+    public void mergeSortArraysAlreadySortedStep(int[] array, ArrayList<StackPane> list, int startL, int stopL, int startR,
+                                                 int stopR, SequentialTransition transition)
     {
         // Additional arrays needed for merging
         int[] right = new int[stopR - startR + 1];
@@ -260,10 +260,8 @@ public class MergeSort
         transition.getChildren().add(moveUp);
     }
 
-    // *****************************************************************************
-    // *****************************************************************************
-    // *****************************************************************************
-    // ******************************************************************************************************************
+// *********************************************************************************************************************
+// *********************************************************************************************************************
 
     public static TranslateTransition move(StackPane sp, int X) {
         TranslateTransition t = new TranslateTransition();

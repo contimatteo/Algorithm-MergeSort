@@ -52,42 +52,61 @@ public class Main extends Application {
     int scelta=0;
     public static void sceltaInputOptions(int scelta, int[] case3Array)
     {
+        // field ARRAY in Input class contains the array
+        // This regardless of the option chosen
         switch(scelta)
         {
             case 1:
+                // create a random array (without duplicates)
                 stopExecution=false;
+                // set max input size & max_value
                 Input.createInput(ARRAY_LENGHT, ARRAY_MAX_VALUE);
                 break;
 
             case 2:
+                // retrieve input from txt file
                 stopExecution=false;
                 try
                 {
                     File dir = new File(".");
                     File file = new File(dir.getCanonicalPath() + File.separator + Main.fileName + ".txt");
+                    // call static function in Input class for generating the array from the txt file
                     Input.createInput(file);
                 }
                 catch (FileNotFoundException ex)
                 {
+                    // if the program reach this point an internal error has occurred
+                    // because this control is already taken and the program reach this point only if file is in the
+                    // directory. Recall function with options 1 to avoid problems
                     Main.sceltaInputOptions(1, null);
-                    System.out.println("Eccezzione generata nel trovare il file --> " + ex.getMessage());
+                    System.out.println("Eccezione generata nel trovare il file --> " + ex.getMessage());
                 }
-                catch (IOException ex) {
+                catch (IOException ex)
+                {
+                    // I/O exception
                     Main.sceltaInputOptions(1, null);
-                    System.out.println("Eccezzione generata --> " + ex.getMessage());
+                    System.out.println("Eccezione generata --> " + ex.getMessage());
                 }
                 break;
 
             case 3:
+                // input from keyboard
                 stopExecution=false;
+                // the case3Array is already created in Options class
                 if(case3Array!=null)
+                    // copy the array into the field array in Input class
                     Input.createInput(case3Array);
                 else
+                    // to prevent the program from crashing
+                    // call not reachable by the program
                     sceltaInputOptions(1, null);
 
                 break;
 
             default:
+                // this case is used when an input error is generated
+                // this option by the <boolean> statement block the application
+                // to create the graphics and launch the algorithm
                 stopExecution=true;
                 break;
         }
@@ -98,18 +117,21 @@ public class Main extends Application {
     public void launcProgram(Stage primaryStage)
     {
         // stop event handler for showing stage
-        primaryStage.setOnShown(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent e) {
+        primaryStage.setOnShown(new EventHandler<WindowEvent>() { public void handle(WindowEvent e) {
                 return;
-            }
-        });
+            }});
+        // if stopExecution and array's size
         if(!stopExecution) {
             if (arrayInput.length > 0) {
-                try {
-                    // GRAFICA
+                try
+                {
+                    // create the graphics
+                    // create an instance of primaryStage and adds elements
                     graphics = new Graphics();
+                    // launch the creation of the array
+                    // each cell is a green rectangle shape
                     graphics.createGraphics(arrayInput, primaryStage);
-                    // ALGORITMO
+                    // call class to implement the algorithm for sorting the array
                     MergeSort algorithm = new MergeSort(graphics);
                 }
                 catch (RuntimeException ex1)
@@ -124,36 +146,52 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        // boolean for stopping execution
         stopExecution=false;
+        // firstStage is the start menu stage
         firstStage=primaryStage;
+        // get info about screen of the laptop
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        // set window dimension
+        // set window dimension and position
         windowWidth  = (int)bounds.getWidth();
         windowHeight = (int)bounds.getHeight();
         windowX      = (int)bounds.getMinX();
         windowY      = (int)bounds.getMinY();
-        // set array's cells spacing
-        //ARRAY_CELL_DIMENSION = (int)(windowWidth/(ARRAY_LENGHT+(ARRAY_LENGHT/2)));
-        // set array's cells dimension
-        //SPACING  = (ARRAY_CELL_DIMENSION)+(ARRAY_CELL_DIMENSION/5);
+        /* ***********************************************************************
+        // SET THIS FOR A RESPONSIVE VIEW
+        set array's cells spacing
+        ARRAY_CELL_DIMENSION = (int)(windowWidth/(ARRAY_LENGHT+(ARRAY_LENGHT/2)));
+        set array's cells dimension
+        SPACING  = (ARRAY_CELL_DIMENSION)+(ARRAY_CELL_DIMENSION/5);
+        create an instance of javafx transition
+        ************************************************************************ */
 
         SequentialTransition transition = new SequentialTransition();
-        // options window
+        // instance the start menu variable (Type: <Stage>)
         dialog = new Stage();
+        // instance start menu and graphics
+        // show tips and options to launch the program
+        // pass primaryStage --> algorithm graphics interface
+        // pass dialog       --> start menu graphics interface
         Options options = new Options(primaryStage, dialog);
 
-        // when input is done
+        // when input options is selected the Option class activate (show) the primaryStage
+        // Event Handler for primaryStage <onShown> event
         primaryStage.setOnShown(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent e) {
+            public void handle(WindowEvent e)
+            {
+                // close the stage where is instanced the graphics of start menu
                 primaryStage.close();
                 try
                 {
+                    // call Main function who launch the UI, UX and the handler of sorting
                     launcProgram(primaryStage);
                 }
                 catch(NullPointerException ex)
                 {
-                    System.out.println("Eccezione Generata --> " + ex.getMessage());
+                    // primaryStage --> null pointer
+                    System.out.println("Eccezione generata nel lancio dell'interfaccia grafica dell'algortimo (puntatore non trovato) --> " + ex.getMessage());
                 }
 
             }
