@@ -1,16 +1,10 @@
 package sample;
 
-import com.sun.scenario.effect.Merge;
 import javafx.animation.SequentialTransition;
-import javafx.application.Application;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -23,18 +17,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TextField;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.stage.Screen;
-import javafx.geometry.Rectangle2D;
 import javafx.util.Duration;
-import java.util.TimerTask;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 import java.util.ArrayList;
@@ -157,17 +143,17 @@ public class Graphics
 
     private StackPane createValueSingleNode(int position, int number)
     {
-        //int num = random.nextInt(10);
+        // create graphics of one cell
+        // set size (square)
         Rectangle   arraySingelCell = new Rectangle(Main.ARRAY_CELL_DIMENSION, Main.ARRAY_CELL_DIMENSION);
         arraySingelCell.setFill(Color.valueOf("#92fe9d"));
-
-        Text        arrayCellValue = new Text(String.valueOf(number));
-
+        // value of array's cell
+        Text arrayCellValue = new Text(String.valueOf(number));
+        // create cell'ìs container
         StackPane   cell = new StackPane();
         cell.setPrefSize(arraySingelCell.getWidth(), arraySingelCell.getHeight());
         cell.setId(String.valueOf(number));
         cell.getChildren().addAll(arraySingelCell, arrayCellValue);
-        //cell.setAlignment(arrayCellValue, Pos.CENTER);
         cell.setAlignment(Pos.CENTER);
         cell.setTranslateX(Main.SPACING * position);
         return cell;
@@ -175,10 +161,14 @@ public class Graphics
 
     public void setContainerStackPane(int[] array)
     {
+        // container for generated array
         containerStackPane = new Pane();
         arrayCells = new ArrayList<>();
-        for (int i = 0; i < (array.length); i++) {
+        for (int i = 0; i < (array.length); i++)
+        {
+            // create graphics of each array cell
             StackPane stackPane = createValueSingleNode(i, array[i]);
+            // and add this to <ArrayList<StackPane>>
             arrayCells.add(stackPane);
         }
         containerStackPane.getChildren().addAll(arrayCells);
@@ -186,30 +176,35 @@ public class Graphics
 
     public void setButtonStepByStep(int[] array)
     {
+        // step-by-step button
         exception = null;
         buttonStepByStep = new Button("Step-by-Stepy");
         buttonStepByStep.setStyle("-fx-background-color: #00c9ff;");
+        // handle <onCLick> event
         buttonStepByStep.setOnAction(event ->
         {
             try
             {
+                // create the transition for this step
                 SequentialTransition transition1 = new SequentialTransition();
+                // launch the function to sorting the array elements
                 transition1 = mergeSortOneStep(array, arrayCells, transition1);
+                // disable motion button
                 buttonStepByStep.setDisable(true);
+                // when the sorting is finished (for this step)
+                // launch the main transition which contains all sorting process transition
                 transition1.play();
                 transition1.setOnFinished(event1 -> buttonStepByStep.setDisable(false));
-                //buttonStepByStep.setDisable(false);
                 exception=new Label("Tutto ok");
             }
              catch(NullPointerException ex)
             {
-                System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage() + " - Caused by: " + ex.getCause());
-                //throw ex;
+                System.out.println("Eccezione generata --> " + ex.getLocalizedMessage() + " - Caused by: " + ex.getCause());
             }
             finally
             {
                 if(exception==null)
-                    consoleWriteException("Eccezzione generata --> Causate nella generazione dell'animazione per il bottone Step-by-Step");
+                    consoleWriteException("Eccezione generata --> Causate nella generazione dell'animazione per il bottone Step-by-Step");
                 else
                     exception = null;
             }
@@ -218,27 +213,33 @@ public class Graphics
 
     public void setButtonMotion(int[] array)
     {
+        // motion button
         buttonMotion = new Button("Motion");
         buttonMotion.setStyle("-fx-background-color: #00c9ff;");
+        // handle <onCLick> event
         buttonMotion.setOnAction(event ->
         {
             try
             {
+                // create the transition
                 SequentialTransition transition2 = new SequentialTransition();
+                // launch the function to sorting the array elements
                 transition2 = mergeSortAllElements(array, arrayCells, transition2);
+                // when the sorting is finished
+                // launch the main transition which contains all sorting process transition
                 transition2.play();
                 transition2.setOnFinished(event1 -> buttonStepByStep.setDisable(false));
                 exception = new Label("Titto ok");
             }
             catch(NullPointerException ex)
             {
-                System.out.println("Eccezzione generata --> " + ex.getLocalizedMessage() + " - Caused by: " + ex.getCause());
+                System.out.println("Eccezione generata --> " + ex.getLocalizedMessage() + " - Caused by: " + ex.getCause());
             }
             finally
             {
                 if(exception==null)
                 {
-                    consoleWriteException("Eccezzione generata --> Causate nella generazione dell'animazione per il bottone Motion");
+                    consoleWriteException("Eccezione generata --> Causate nella generazione dell'animazione per il bottone Motion");
                     setButtonMotion(array);
                 }
                 else
@@ -249,6 +250,7 @@ public class Graphics
 
     public void setDurationTransition()
     {
+        // create the input for update transition's duration
         Label durationText = new Label();
         durationText.setText("Imposta la velocità dell'animazione (in millisecondi):");
         durationText.setTextFill(Color.AZURE);
@@ -258,10 +260,12 @@ public class Graphics
         durationTransition = new TextField();
         durationTransition.setText("200");
         durationTransition.setMinWidth(50);
+        // add listener to handle the change of transition duration's value
         durationTransition.textProperty().addListener((observable, oldValue, newValue) ->
         {
             try
             {
+                // try to convert the new value from <string> to <int>
                 time = Integer.parseInt(newValue);
                 Main.SPEED=Duration.millis(time);
                 exception = new Label("Ok");
@@ -277,7 +281,7 @@ public class Graphics
             finally
             {
                 if(exception==null)
-                    consoleWriteException("Eccezzione generata --> Causata nell'impostazione della durata della transizione");
+                    consoleWriteException("Eccezione generata --> Causata nell'impostazione della durata della transizione");
                 else
                     exception = null;
             }
@@ -369,7 +373,7 @@ public class Graphics
 
     public void setScene()
     {
-        scene = new Scene(container, 800, 400);
+        scene = new Scene(container, Main.windowWidth, Main.windowHeight);
     }
 
     public void setStage(Stage s)
@@ -380,7 +384,8 @@ public class Graphics
         stage.setX(Main.windowX);
         stage.setY(Main.windowY);
         stage.setWidth(Main.windowWidth);
-        stage.setHeight(Main.windowHeight-42);
+        //stage.setHeight(Main.windowHeight-42);
+        stage.setHeight(Main.windowHeight);
         stage.setScene(scene);
         stage.show();
     }
@@ -394,6 +399,8 @@ public class Graphics
     {
         createConsoleOutput();
         createConsoleException();
+        // instance of MergeSort class
+        // created for launch sorting (and animation) on buttons click
         mergeTemp=new MergeSort(this);
         setContainerStackPane(array);
         setButtonStepByStep(array);

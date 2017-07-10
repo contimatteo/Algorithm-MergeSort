@@ -1,12 +1,16 @@
 package sample;
 
+import javafx.scene.control.Alert;
+
 import java.util.*;
 
 /**
  * Created by matteoconti on 27/06/17.
  */
-public class Utilities {
+public class Utilities
+{
 
+    // method for clear default IntelliJ Console
     public static void clearConsole()
     {
         try
@@ -23,11 +27,10 @@ public class Utilities {
             }
         }
         catch (final Exception e)
-        {
-            //  Handle any exceptions.
-        }
+        { }
     }
 
+    // method for print an array
     public static void printArray(int[] array)
     {
         System.out.println(" ");
@@ -38,22 +41,23 @@ public class Utilities {
         System.out.println(" ");
     }
 
-
-
-
+    // method who return <boolean> if [n] is duplicated into [a]
     static public boolean isContained(int[] a, int n)
     {
         boolean response = false;
-        for (int i = 0; i < (a.length); i++) {
+        for (int i = 0; i < (a.length); i++)
+        {
+            // bypass the control of an element with itself
             if(a[i]==n)
             {
-                //System.out.println("ho trovato un problema in posizione [" + (i) + "] per il numero [" + n +"]");
+                // number is duplicate
                 return true;
             }
         }
         return response;
     }
 
+    // method for checking the correct generation of random array without duplicates
     static public boolean checkErrorWhileGeneratingArray(int[] a)
     {
         boolean response = false;
@@ -70,6 +74,7 @@ public class Utilities {
     }
 
 
+    // method for generating random array without duplicates
     static public int[] createRandomArray(int numberOfElements, int maxNumberReached)
     {
         int n=0;
@@ -92,15 +97,21 @@ public class Utilities {
             System.out.println(" ");
             if(checkErrorWhileGeneratingArray(array))
             {
+                // error while generating array. There are duplicates
                 clearConsole();
                 System.out.print("ERRORE NELLA GENERAZIONE DI UN ARRAY DI NUMERI CASUALI");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Attenzione");
+                alert.setContentText("ERRORE NELLA GENERAZIONE DI UN ARRAY DI NUMERI CASUALI");
+                alert.showAndWait();
+                // re-generate the array
                 createRandomArray(numberOfElements, maxNumberReached);
             }
-            //printArray(array);
         }
         return array;
     }
 
+/* *********************************************************************************************************************
     public static int[] inputArray(int numberOfElements)
     {
         int[] array = new int[numberOfElements];
@@ -125,5 +136,6 @@ public class Utilities {
         //printArray(array);
         return array;
     }
+********************************************************************************************************************* */
 
 }
