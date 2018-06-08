@@ -19,8 +19,8 @@ La cartella JavaDoc non è indispensabile, serve solo come guida all'interno del
 ## Testare il programma
 ###  Prima di partire
 Per iniziare:
-	
-	Scaricare e estrarre il contenuto della cartella "Executable"
+
+	Scaricare e estrarre il contenuto della cartella "build"
 Creare un file di testo del tipo
 
 	nome-del-mio-file.txt
@@ -40,7 +40,7 @@ Leggere attentamente le istruzioni nella schermata di avvio su come impostare il
 Terminare il file di testo con uno zero su una nuova riga.
 Inserire la dimensione dell'array e la modalità con cui verrà creato l'array.
 
-####  Eseguire l'Algoritmo 
+####  Eseguire l'Algoritmo
 Per eseguire l'algoritmo di ordinamento:
 
 	Click su start
@@ -61,7 +61,7 @@ Per eseguire l'algoritmo in modalità "Step by Step":
 Per implementare direttamente i codici sorgente:
 
 
-	Estrarre il contenuto della cartella "Classes"
+	Estrarre il contenuto della cartella "src"
 
 Per sviluppare il progetto in IntelliJ o in Eclipse:
 
@@ -83,5 +83,3 @@ Conti Matteo
 
 ##  Licenza
 Questo programma è stato sviluppato sotto la licenza GNU GENERAL PUBLIC LICENSE (v.3). Leggere 'LICENSE.md' maggiori dettagli.
-
-
